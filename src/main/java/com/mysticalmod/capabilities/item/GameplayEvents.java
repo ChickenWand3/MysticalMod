@@ -29,9 +29,6 @@ public class GameplayEvents {
 	@SubscribeEvent
 	public static void displayAttributes(final ItemTooltipEvent event) {
 		event.getItemStack().getCapability(CapabilityItemLvl.ITEM_LVL_CAPABILITY).ifPresent(lvl -> {
-			if (event.getEntity().level.isClientSide) {
-				System.out.println("ClientSide " + lvl.getItemLvl() + " " + lvl.getItemRarity());
-			}
 			DefaultItemLvl lvl1 = (DefaultItemLvl) lvl;
 			event.getToolTip().add(Component.literal(ColorConstants.BOLD + "Level " + lvl1.getItemLvl()));
 			event.getToolTip().add(Component.literal(lvl1.getRarityAndColor() + " " + Math.round((lvl1.getRarityMultiplier()-1)*100) + "% Boost"));

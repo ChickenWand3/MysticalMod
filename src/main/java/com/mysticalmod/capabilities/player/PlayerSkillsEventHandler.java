@@ -21,10 +21,12 @@ public class PlayerSkillsEventHandler {
 		}
 	}
 
+	/*
 	@SubscribeEvent
 	public void registerCaps(RegisterCapabilitiesEvent event) {
 		event.register(PlayerSkills.class);
 	}
+	*/
 	
 	
 	

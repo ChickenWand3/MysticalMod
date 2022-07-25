@@ -42,7 +42,8 @@ public class MysticalMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-    	event.enqueueWork(SimpleNetworkHandler::init);
+    	//event.enqueueWork(SimpleNetworkHandler::init);
+    	SimpleNetworkHandler.init();
     }
 
     @SubscribeEvent

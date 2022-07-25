@@ -21,13 +21,16 @@ public class ItemLvlEventHandler {
 		if (event.getObject().isEnchantable()) {
 			ItemLvlProvider providerlvl = new ItemLvlProvider();
 			event.addCapability(new ResourceLocation(MysticalMod.MODID, "mysticalmod"), providerlvl);
+			event.addListener(providerlvl::invalidate);
 		}
 	}
 
+	/*
 	@SubscribeEvent
 	public void registerCaps(RegisterCapabilitiesEvent event) {
 		event.register(ItemLvl.class);
 	}
+	*/
 	
 	
 	
