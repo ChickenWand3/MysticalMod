@@ -11,6 +11,8 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import static com.mysticalmod.MysticalMod.LOGGER;
+
 @Mod.EventBusSubscriber(modid = MysticalMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ItemLvlEventHandler {
 	
@@ -24,21 +26,5 @@ public class ItemLvlEventHandler {
 			event.addListener(providerlvl::invalidate);
 		}
 	}
-
-	/*
-	@SubscribeEvent
-	public void registerCaps(RegisterCapabilitiesEvent event) {
-		event.register(ItemLvl.class);
-	}
-	*/
-	
-	
-	
-	
-
-	
-	
-	
-	
 	
 }

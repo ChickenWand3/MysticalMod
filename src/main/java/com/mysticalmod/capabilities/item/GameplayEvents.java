@@ -1,17 +1,24 @@
 package com.mysticalmod.capabilities.item;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.mysticalmod.MysticalMod;
 import com.mysticalmod.capabilities.ColorConstants;
 import com.mysticalmod.capabilities.player.CapabilityPlayerSkills;
 import com.mysticalmod.capabilities.player.DefaultPlayerSkills;
 
+import com.mysticalmod.client.ItemStackSyncManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.PlayerList;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 //import net.minecraft.world.entity.player.Player;
@@ -21,17 +28,19 @@ import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 @Mod.EventBusSubscriber(modid = MysticalMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GameplayEvents {
 	
 	
 	@SubscribeEvent
+	//Only runs on the Client
 	public static void displayAttributes(final ItemTooltipEvent event) {
 		event.getItemStack().getCapability(CapabilityItemLvl.ITEM_LVL_CAPABILITY).ifPresent(lvl -> {
-			DefaultItemLvl lvl1 = (DefaultItemLvl) lvl;
-			event.getToolTip().add(Component.literal(ColorConstants.BOLD + "Level " + lvl1.getItemLvl()));
-			event.getToolTip().add(Component.literal(lvl1.getRarityAndColor() + " " + Math.round((lvl1.getRarityMultiplier()-1)*100) + "% Boost"));
+			ItemStackSyncManager.onHovered(event.getItemStack());
+			event.getToolTip().add(Component.literal(ColorConstants.BOLD + "Level " + lvl.getItemLvl()));
+			event.getToolTip().add(Component.literal(lvl.getRarityAndColor() + " " + Math.round((lvl.getRarityMultiplier()-1)*100) + "% Boost"));
 		});
 		
 	}
@@ -56,8 +65,9 @@ public class GameplayEvents {
 	}
 	
 	
+	//Runs on the client and the server
 	@SubscribeEvent
-	public static void updateItemAttributes(ItemAttributeModifierEvent event) {
+	public static void updateItemAttributes(final ItemAttributeModifierEvent event) {
 		event.getItemStack().getCapability(CapabilityItemLvl.ITEM_LVL_CAPABILITY).ifPresent(lvl -> {
 			if (event.getSlotType() == EquipmentSlot.MAINHAND) {
 				event.clearModifiers();

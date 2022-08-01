@@ -12,6 +12,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
+import static com.mysticalmod.MysticalMod.LOGGER;
+
 @Mod.EventBusSubscriber(modid = MysticalMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonEBS {
 	
@@ -22,7 +24,7 @@ public class CommonEBS {
 	}
 	
 	@SubscribeEvent
-	public void registerCaps(RegisterCapabilitiesEvent event) {
+	public static void registerCaps(RegisterCapabilitiesEvent event) {
 		event.register(ItemLvl.class);
 		event.register(PlayerSkills.class);
 	}

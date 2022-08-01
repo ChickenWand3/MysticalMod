@@ -1,14 +1,10 @@
 package com.mysticalmod;
 
 import com.mojang.logging.LogUtils;
-import com.mysticalmod.capabilities.item.ItemLvlEventHandler;
-import com.mysticalmod.capabilities.item.ItemLvlProvider;
-import com.mysticalmod.capabilities.player.PlayerSkillsEventHandler;
-import com.mysticalmod.network.SimpleNetworkHandler;
+import com.mysticalmod.network.PacketHandler;
 import com.mysticalmod.painting.ModPaintings;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,7 +13,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 @Mod(MysticalMod.MODID)
@@ -25,7 +20,7 @@ public class MysticalMod
 {
     public static final String MODID = "mysticalmod";
     
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
 
     public MysticalMod()
@@ -42,8 +37,7 @@ public class MysticalMod
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-    	//event.enqueueWork(SimpleNetworkHandler::init);
-    	SimpleNetworkHandler.init();
+    	PacketHandler.init();
     }
 
     @SubscribeEvent

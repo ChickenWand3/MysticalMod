@@ -12,8 +12,8 @@ import net.minecraftforge.network.PacketDistributor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.mysticalmod.network.ClientboundPlayerSkillsUpdateMessage;
-import com.mysticalmod.network.SimpleNetworkHandler;
+import com.mysticalmod.network.PacketHandler;
+import com.mysticalmod.network.PlayerPacket;
 
 public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag> {
     private final DefaultPlayerSkills skills = new DefaultPlayerSkills();
@@ -61,8 +61,8 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
         	System.out.println("Player levelClientUpdate");
             ServerPlayer serverPlayer = (ServerPlayer) player;
             player.getCapability(CapabilityPlayerSkills.PLAYER_STATS_CAPABILITY).ifPresent(cap ->
-                    SimpleNetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer),
-                            new ClientboundPlayerSkillsUpdateMessage(cap.getLvl(), cap.getXp())));
+                    PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer),
+                            new PlayerPacket(cap.getLvl(), cap.getXp())));
         }
     }
 

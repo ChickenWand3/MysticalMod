@@ -13,8 +13,8 @@ import net.minecraftforge.network.PacketDistributor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.mysticalmod.network.ClientboundItemLvlUpdateMessage;
-import com.mysticalmod.network.SimpleNetworkHandler;
+import com.mysticalmod.network.ItemPacket;
+import com.mysticalmod.network.PacketHandler;
 
 public class ItemLvlProvider implements ICapabilitySerializable<CompoundTag> {
     private final DefaultItemLvl lvl = new DefaultItemLvl();
@@ -51,18 +51,17 @@ public class ItemLvlProvider implements ICapabilitySerializable<CompoundTag> {
             int itemRarity = nbt.getInt("itemRarity");
             lvl.setItemLvl(itemLvl);
             lvl.setItemRarity(itemRarity);
-
         }
     }
     
+    
+
     public static void levelClientUpdate(Player player, ItemStack updateItem) {
         if (!player.level.isClientSide()) {
-        	System.out.println("Item levelClientUpdate on server");
             ServerPlayer serverPlayer = (ServerPlayer) player;
-            ItemStack item = updateItem;
-            item.getCapability(CapabilityItemLvl.ITEM_LVL_CAPABILITY).ifPresent(cap ->
-            SimpleNetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer),
-                    new ClientboundItemLvlUpdateMessage(item, cap.getItemLvl(), cap.getItemRarity())));
-}
+            updateItem.getCapability(CapabilityItemLvl.ITEM_LVL_CAPABILITY).ifPresent(cap ->
+            PacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer),
+                    new ItemPacket(cap, updateItem.getHoverName())));
+		}
     }
 }

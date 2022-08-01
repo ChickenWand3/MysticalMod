@@ -17,5 +17,7 @@ public interface ItemLvl {
     void generateRarity(Player player, ItemStack item);
     
     float getRarityMultiplier();
+    
+    void updateClientData(Player player, ItemStack item);
 
 }

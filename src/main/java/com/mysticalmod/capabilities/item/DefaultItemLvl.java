@@ -15,7 +15,6 @@ public class DefaultItemLvl implements ItemLvl {
 
     public void determineLvl(int xp, Player player, ItemStack item) {
     	itemLvl = xp;
-    	ItemLvlProvider.levelClientUpdate(player, item);
     }
     
     public String getRarity() {
@@ -42,17 +41,21 @@ public class DefaultItemLvl implements ItemLvl {
     	if (itemRarityName == null) {
     		setRarityName();
     	}
-    	if (itemRarityName == "Mythical") {
+    	if (itemRarityName.equals("Mythical")) {
     		return ColorConstants.RED + ColorConstants.BOLD + "Mythical";
-    	} if (itemRarityName == "Legendary") {
+    	} if (itemRarityName.equals("Legendary")) {
     		return ColorConstants.GOLD + "Legendary";
-    	} else if(itemRarityName == "Epic") {
+    	} else if(itemRarityName.equals("Epic")) {
     		return ColorConstants.DARK_PURPLE + "Epic";
-    	} else if (itemRarityName == "Rare") {
+    	} else if (itemRarityName.equals("Rare")) {
     		return ColorConstants.BLUE + "Rare";
-    	} else if (itemRarityName == "Uncommon") {
+    	} else if (itemRarityName.equals("Uncommon")) {
     		return ColorConstants.GREEN + "Uncommon";
     	} else {return ColorConstants.GRAY + "Common";}
+    }
+    
+    public void updateClientData(Player player, ItemStack stack) {
+    	ItemLvlProvider.levelClientUpdate(player, stack);
     }
     
     
@@ -72,7 +75,6 @@ public class DefaultItemLvl implements ItemLvl {
     		itemRarity = 0;
     	}
     	setRarityName();
-    	ItemLvlProvider.levelClientUpdate(player, item);
     }
     
     public float getRarityMultiplier() {
